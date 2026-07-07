@@ -3,22 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raúl · 40 años en cinta</title>
+<title>Raúl · Nivel 40 desbloqueado</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Permanent+Marker&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap');
 
 :root{
-  --cinta:#EDE3CC;
-  --cinta-dim:#E1D3B4;
-  --tinta:#211C16;
-  --teal:#0F5C56;
-  --teal-deep:#0A403C;
-  --brick:#A63A24;
-  --mostaza:#E3A73E;
-  --tracking:#C23573;
+  --bg:#150822;
+  --bg-deep:#0a0414;
+  --panel:#1f1033;
+  --panel-edge:#341a5c;
+  --ink:#fdf3ff;
+  --ink-dim:rgba(253,243,255,0.72);
+  --pink:#ff2e97;
+  --cyan:#2be7ff;
+  --purple:#b06bff;
+  --yellow:#ffe14d;
+  --orange:#ff7a45;
+  --grid-line:rgba(43,231,255,0.25);
   --paper-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
-  --f-display:'Big Shoulders Display', sans-serif;
-  --f-marker:'Permanent Marker', cursive;
+  --f-display:'Bungee', cursive;
+  --f-pixel:'Press Start 2P', monospace;
   --f-mono:'Space Mono', monospace;
 }
 
@@ -26,13 +30,13 @@
 html{scroll-behavior:smooth;}
 body{
   margin:0;
-  background:var(--cinta);
-  color:var(--tinta);
+  background:var(--bg-deep);
+  color:var(--ink);
   font-family:var(--f-mono);
   overflow-x:hidden;
 }
 
-::selection{background:var(--brick);color:var(--cinta);}
+::selection{background:var(--pink);color:var(--bg-deep);}
 
 /* ---------- fixed atmosphere layers ---------- */
 .grain{
@@ -41,7 +45,7 @@ body{
   opacity:0.05;
   pointer-events:none;
   z-index:500;
-  mix-blend-mode:multiply;
+  mix-blend-mode:overlay;
 }
 .scanlines{
   position:fixed;inset:0;
@@ -49,8 +53,8 @@ body{
   z-index:499;
   background:repeating-linear-gradient(
     to bottom,
-    rgba(0,0,0,0.055) 0px,
-    rgba(0,0,0,0.055) 1px,
+    rgba(0,0,0,0.16) 0px,
+    rgba(0,0,0,0.16) 1px,
     transparent 2px,
     transparent 3px
   );
@@ -60,10 +64,10 @@ body{
   position:fixed;inset:0;
   pointer-events:none;
   z-index:498;
-  box-shadow:inset 0 0 18vw rgba(10,8,4,0.38);
+  box-shadow:inset 0 0 20vw rgba(4,2,10,0.65);
 }
 
-/* ---------- HUD: rec indicator ---------- */
+/* ---------- HUD: insert coin ---------- */
 .rec-hud{
   position:fixed;
   top:18px;left:18px;
@@ -71,50 +75,55 @@ body{
   display:flex;
   align-items:center;
   gap:8px;
-  font-family:var(--f-mono);
-  font-size:12px;
-  letter-spacing:0.12em;
-  color:var(--cinta);
-  background:rgba(15,12,8,0.55);
-  padding:7px 12px;
+  font-family:var(--f-pixel);
+  font-size:10px;
+  letter-spacing:0.05em;
+  color:var(--yellow);
+  background:rgba(10,4,20,0.7);
+  border:1px solid var(--panel-edge);
+  padding:8px 12px;
   border-radius:2px;
   backdrop-filter:blur(2px);
+  box-shadow:0 0 12px rgba(255,225,77,0.25);
 }
 .rec-dot{
   width:8px;height:8px;border-radius:50%;
-  background:var(--brick);
-  animation:blink 1.4s steps(1) infinite;
+  background:var(--pink);
+  box-shadow:0 0 8px var(--pink);
+  animation:blink 1.1s steps(1) infinite;
 }
 @media (prefers-reduced-motion:reduce){ .rec-dot{animation:none;} }
 @keyframes blink{ 0%,55%{opacity:1;} 56%,100%{opacity:0.15;} }
 .rec-time{font-variant-numeric:tabular-nums;}
 
-/* ---------- tape counter (VCR mechanical counter) ---------- */
+/* ---------- score counter (arcade digit flip) ---------- */
 .tape-counter{
   position:fixed;
   right:16px;top:50%;
   transform:translateY(-50%);
   z-index:600;
-  background:var(--tinta);
-  border:2px solid #000;
+  background:var(--panel);
+  border:2px solid var(--cyan);
   border-radius:3px;
   padding:8px 8px;
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:6px;
-  box-shadow:0 3px 0 rgba(0,0,0,0.4);
+  box-shadow:0 0 14px rgba(43,231,255,0.35);
 }
 .tape-counter .cnt-label{
+  font-family:var(--f-pixel);
   font-size:8px;
-  color:var(--mostaza);
-  letter-spacing:0.15em;
+  color:var(--cyan);
+  letter-spacing:0.1em;
 }
 .digits{
   display:flex;
-  background:#efe9d8;
+  background:#0a0412;
   border-radius:1px;
   padding:2px 3px;
+  border:1px solid var(--panel-edge);
 }
 .digit{
   width:12px;height:18px;
@@ -123,7 +132,8 @@ body{
   font-family:var(--f-mono);
   font-weight:700;
   font-size:14px;
-  color:#141210;
+  color:var(--cyan);
+  text-shadow:0 0 6px var(--cyan);
 }
 .digit-strip{
   position:absolute;top:0;left:0;
@@ -144,27 +154,28 @@ section{
   padding:110px 8vw;
 }
 .eyebrow{
-  font-family:var(--f-marker);
-  font-size:15px;
-  color:var(--brick);
-  transform:rotate(-2deg);
+  font-family:var(--f-pixel);
+  font-size:11px;
+  color:var(--pink);
   display:inline-block;
-  margin-bottom:10px;
+  margin-bottom:14px;
+  letter-spacing:0.02em;
 }
 .chapter-num{
-  font-family:var(--f-mono);
-  font-size:12px;
-  letter-spacing:0.35em;
-  opacity:0.55;
+  font-family:var(--f-pixel);
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:var(--cyan);
+  opacity:0.8;
 }
 
-/* ---------- HERO ---------- */
+/* ---------- HERO (synthwave) ---------- */
 .hero{
   min-height:100svh;
-  background:
-    radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.05), transparent 60%),
-    linear-gradient(180deg, var(--teal-deep), var(--teal) 60%, #0c4642 100%);
-  color:var(--cinta);
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(180deg, #1c0b33 0%, #2a0f3f 45%, #150822 100%);
+  color:var(--ink);
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -174,16 +185,17 @@ section{
 }
 .hero-frame{
   position:absolute;
-  inset:22px;
-  border:2px solid rgba(237,227,204,0.35);
+  inset:16px;
+  border:2px solid var(--panel-edge);
   pointer-events:none;
+  z-index:3;
 }
 .hero-frame::before,.hero-frame::after,
 .hero-frame span::before,.hero-frame span::after{
   content:'';
   position:absolute;
   width:26px;height:26px;
-  border-color:var(--mostaza);
+  border-color:var(--cyan);
   border-style:solid;
   border-width:0;
 }
@@ -192,88 +204,85 @@ section{
 .hero-frame span::before{ bottom:-2px;left:-2px;border-bottom-width:4px;border-left-width:4px;}
 .hero-frame span::after{ bottom:-2px;right:-2px;border-bottom-width:4px;border-right-width:4px;}
 
+.synth-sun{
+  position:absolute;
+  top:14%;left:50%;
+  width:min(60vw,480px);height:min(60vw,480px);
+  transform:translate(-50%,-30%);
+  border-radius:50%;
+  background:repeating-linear-gradient(
+    to bottom,
+    var(--yellow) 0px, var(--yellow) 5px,
+    var(--orange) 5px, var(--orange) 10px,
+    var(--pink) 10px, var(--pink) 15px,
+    transparent 15px, transparent 20px
+  );
+  box-shadow:0 0 90px rgba(255,122,69,0.45);
+  z-index:0;
+}
+.synth-grid{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:46%;
+  z-index:1;
+  background-image:
+    repeating-linear-gradient(to right, var(--grid-line) 0px, var(--grid-line) 2px, transparent 2px, transparent 48px),
+    repeating-linear-gradient(to top, var(--grid-line) 0px, var(--grid-line) 2px, transparent 2px, transparent 34px);
+  background-size:100% 100%, 100% 100%;
+  -webkit-mask-image:linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  mask-image:linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  transform:perspective(220px) rotateX(55deg);
+  transform-origin:bottom;
+}
+
+.hero-content{position:relative;z-index:3;}
+
 .hero-eyebrow-top{
-  font-family:var(--f-mono);
-  font-size:clamp(10px,1.4vw,13px);
-  letter-spacing:0.2em;
-  color:var(--mostaza);
-  opacity:0.9;
-  margin-bottom:clamp(18px,4vh,40px);
+  font-family:var(--f-pixel);
+  font-size:clamp(9px,1.4vw,12px);
+  letter-spacing:0.05em;
+  color:var(--yellow);
+  opacity:0.95;
+  margin-bottom:clamp(18px,4vh,32px);
+  animation:blink 1.6s steps(1) infinite;
 }
+@media (prefers-reduced-motion:reduce){ .hero-eyebrow-top{animation:none;} }
 
-.vhs-wrap{
-  position:relative;
-  width:100%;
-  max-width:860px;
-  filter:drop-shadow(0 24px 40px rgba(0,0,0,0.45));
-}
-.vhs-wrap img{
-  display:block;
-  width:100%;
-  height:auto;
-}
-
-.vhs-label{
-  position:absolute;
-  left:24%;
-  top:calc(38% - 21px);
-  width:52%;
-  height:48%;
-  background:var(--cinta);
-  border:1px solid rgba(33,28,22,0.3);
-  border-radius:1px;
-  transform:rotate(-3deg);
-  box-shadow:3px 4px 0 rgba(0,0,0,0.4);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:2%;
-  padding:5% 6%;
-  text-align:center;
-}
-.vhs-label::before{
-  content:'';
-  position:absolute;
-  top:14%;left:10%;right:10%;
-  height:1px;
-  background:rgba(33,28,22,0.2);
-}
-.vhs-label-line1{
-  font-family:var(--f-marker);
-  font-size:clamp(9px,2.3vw,20px);
-  color:var(--brick);
-  transform:rotate(-1deg);
-  line-height:1.1;
-}
-.vhs-label-name{
+.hero-title{
   font-family:var(--f-display);
-  font-weight:900;
-  font-size:clamp(16px,6.8vw,56px);
+  font-size:clamp(56px,16vw,180px);
   line-height:0.95;
-  color:var(--tinta);
-  letter-spacing:0.01em;
+  margin:0;
+  color:var(--ink);
+  text-shadow:
+    0 0 6px var(--ink),
+    0 0 22px var(--pink),
+    0 0 46px var(--pink),
+    0 6px 0 var(--purple);
 }
-.vhs-label-line2{
+.hero-sub{
+  font-family:var(--f-pixel);
+  font-size:clamp(11px,2.6vw,18px);
+  color:var(--cyan);
+  text-shadow:0 0 12px var(--cyan);
+  margin-top:18px;
+  letter-spacing:0.03em;
+}
+.hero-tagline{
   font-family:var(--f-mono);
-  font-size:clamp(7px,1.7vw,14px);
-  letter-spacing:0.04em;
-  color:var(--teal);
-  line-height:1.2;
-}
-@media (max-width:640px){
-  .vhs-label{
-    left:20%; top:calc(36% - 21px); width:60%; height:52%;
-  }
+  font-size:clamp(11px,1.8vw,14px);
+  color:var(--ink-dim);
+  letter-spacing:0.05em;
+  margin-top:12px;
 }
 
 .scroll-hint{
-  font-family:var(--f-mono);
-  font-size:12px;
-  letter-spacing:0.25em;
-  color:var(--cinta);
-  opacity:0.8;
-  margin-top:clamp(20px,4vh,42px);
+  font-family:var(--f-pixel);
+  font-size:11px;
+  letter-spacing:0.1em;
+  color:var(--ink);
+  opacity:0.85;
+  margin-top:clamp(24px,4vh,46px);
   animation:bob 1.8s ease-in-out infinite;
 }
 @media (prefers-reduced-motion:reduce){ .scroll-hint{animation:none;} }
@@ -288,21 +297,21 @@ section{
   overflow:hidden;
 }
 .glitchy.glitch::before{
-  color:var(--tracking);
+  color:var(--pink);
   transform:translate(2px,0);
   clip-path:inset(0 0 55% 0);
-  opacity:0.7;
+  opacity:0.8;
 }
 .glitchy.glitch::after{
-  color:var(--teal);
+  color:var(--cyan);
   transform:translate(-2px,0);
   clip-path:inset(45% 0 0 0);
-  opacity:0.7;
+  opacity:0.8;
 }
 
-/* ---------- chapter sections ---------- */
+/* ---------- chapter sections ("levels") ---------- */
 .chapter{
-  background:var(--cinta);
+  background:var(--bg);
   display:flex;
   gap:6vw;
   align-items:center;
@@ -321,51 +330,47 @@ section{
 }
 .chapter-heading{
   font-family:var(--f-display);
-  font-weight:800;
-  font-size:clamp(30px,5vw,58px);
-  line-height:1.02;
+  font-size:clamp(28px,4.6vw,52px);
+  line-height:1.05;
   margin:6px 0 22px;
-  color:var(--tinta);
+  color:var(--ink);
+  text-shadow:0 0 18px rgba(43,231,255,0.35);
 }
 .chapter-body{
   font-family:var(--f-mono);
   font-size:15px;
   line-height:1.75;
   max-width:46ch;
-  color:#3a3226;
+  color:var(--ink-dim);
 }
 .chapter-note{
   display:inline-block;
-  font-family:var(--f-marker);
-  font-size:15px;
-  color:var(--teal);
+  font-family:var(--f-pixel);
+  font-size:11px;
+  line-height:1.6;
+  color:var(--yellow);
   margin-top:20px;
-  transform:rotate(-1.5deg);
 }
 
-/* sticker photo */
+/* photo = arcade screen */
 .sticker{
   position:relative;
   max-width:100%;
-  filter:drop-shadow(10px 12px 0 rgba(33,28,22,0.9));
+  padding:10px;
+  background:var(--panel);
+  border-radius:16px;
+  box-shadow:0 0 0 2px var(--panel-edge), 0 0 30px rgba(176,107,255,0.35), 10px 14px 0 rgba(0,0,0,0.5);
   transition:transform 0.6s cubic-bezier(.2,1,.3,1);
 }
 .sticker img{
   display:block;
   max-width:100%;
   height:auto;
-  max-height:70vh;
+  max-height:66vh;
+  border-radius:8px;
 }
-.sticker.tilt-a{transform:rotate(-5deg);}
-.sticker.tilt-b{transform:rotate(4deg);}
-.sticker-tape{
-  position:absolute;
-  top:-16px;left:50%;
-  transform:translateX(-50%) rotate(-3deg);
-  width:90px;height:30px;
-  background:rgba(227,167,62,0.75);
-  box-shadow:0 1px 2px rgba(0,0,0,0.25);
-}
+.sticker.tilt-a{transform:rotate(-3deg);box-shadow:0 0 0 2px var(--panel-edge), 0 0 30px rgba(43,231,255,0.4), 10px 14px 0 rgba(0,0,0,0.5);}
+.sticker.tilt-b{transform:rotate(2.5deg);box-shadow:0 0 0 2px var(--panel-edge), 0 0 30px rgba(255,46,151,0.4), 10px 14px 0 rgba(0,0,0,0.5);}
 
 /* reveal-on-scroll base */
 .reveal{
@@ -392,11 +397,10 @@ section{
 .wipe.in-view{clip-path:inset(0 0 0 0);}
 @media (prefers-reduced-motion:reduce){ .wipe{clip-path:inset(0 0 0 0);transition:none;} }
 
-/* VHS tracking glitch: image loads blurred/distorted, then settles sharp */
-.vhs-fx{filter:blur(0) saturate(1) contrast(1) hue-rotate(0deg);}
-.in-view .vhs-fx{animation:vhsTrackingIn 1.1s steps(16,end) both;}
-.vhs-wrap .vhs-fx{animation:vhsTrackingIn 1.2s steps(16,end) 0.3s both;}
-@keyframes vhsTrackingIn{
+/* CRT power-on: image loads static/blurred, then settles sharp */
+.crt-fx{filter:blur(0) saturate(1) contrast(1) hue-rotate(0deg);}
+.in-view .crt-fx{animation:crtPowerOn 1.1s steps(16,end) both;}
+@keyframes crtPowerOn{
   0%{filter:blur(11px) saturate(2) contrast(1.4) hue-rotate(10deg);}
   10%{filter:blur(8px) saturate(1.8) contrast(1.3) hue-rotate(-8deg);}
   20%{filter:blur(10px) saturate(1.6) contrast(1.35) hue-rotate(6deg);}
@@ -408,31 +412,32 @@ section{
   100%{filter:blur(0) saturate(1) contrast(1) hue-rotate(0deg);}
 }
 @media (prefers-reduced-motion:reduce){
-  .vhs-fx{animation:none !important;filter:none !important;}
+  .crt-fx{animation:none !important;filter:none !important;}
 }
 
-/* ---------- document / carnet section ---------- */
+/* ---------- document / player card section ---------- */
 .document{
-  background:var(--teal-deep);
-  color:var(--cinta);
+  background:radial-gradient(ellipse at 50% 0%, #2a0f3f, var(--bg-deep) 70%);
+  color:var(--ink);
   text-align:center;
 }
-.document .eyebrow{color:var(--mostaza);}
-.document .chapter-heading{color:var(--cinta);}
+.document .eyebrow{color:var(--yellow);}
+.document .chapter-heading{color:var(--ink);}
 .document-frame{
   position:relative;
   max-width:640px;
   margin:40px auto 0;
-  border:10px solid var(--tinta);
-  box-shadow:0 18px 0 rgba(0,0,0,0.25);
+  border:10px solid var(--panel);
+  box-shadow:0 0 0 2px var(--cyan), 0 0 40px rgba(43,231,255,0.4), 0 18px 0 rgba(0,0,0,0.4);
   overflow:hidden;
+  border-radius:10px;
 }
 .document-frame img{display:block;width:100%;height:auto;}
 .scan-sweep{
   position:absolute;
   left:0;top:-10%;
   width:100%;height:35%;
-  background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0) 100%);
+  background:linear-gradient(180deg, rgba(43,231,255,0) 0%, rgba(43,231,255,0.45) 50%, rgba(43,231,255,0) 100%);
   transform:translateY(-120%);
   pointer-events:none;
 }
@@ -447,28 +452,31 @@ section{
   .document-frame.in-view .scan-sweep{animation:none;display:none;}
 }
 .document-caption{
-  font-size:12px;
-  letter-spacing:0.15em;
-  opacity:0.7;
-  margin-top:16px;
+  font-family:var(--f-pixel);
+  font-size:11px;
+  letter-spacing:0.05em;
+  color:var(--yellow);
+  opacity:0.9;
+  margin-top:18px;
 }
 
-/* ---------- finale (poster freeze frame) ---------- */
+/* ---------- finale (bonus round) ---------- */
 .finale{
-  background:var(--tinta);
-  color:var(--cinta);
+  background:var(--bg-deep);
+  color:var(--ink);
   text-align:center;
 }
 .pause-badge{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  font-family:var(--f-mono);
-  font-size:13px;
-  letter-spacing:0.2em;
-  background:rgba(237,227,204,0.12);
-  border:1px solid rgba(237,227,204,0.35);
-  padding:6px 14px;
+  font-family:var(--f-pixel);
+  font-size:11px;
+  letter-spacing:0.05em;
+  color:var(--yellow);
+  background:rgba(255,225,77,0.1);
+  border:1px solid var(--yellow);
+  padding:8px 14px;
   border-radius:2px;
   margin-bottom:26px;
 }
@@ -476,32 +484,33 @@ section{
   position:relative;
   max-width:560px;
   margin:0 auto;
-  border:12px solid var(--cinta);
-  box-shadow:0 0 0 2px var(--tinta), 16px 18px 0 rgba(0,0,0,0.45);
+  border:12px solid var(--panel);
+  box-shadow:0 0 0 2px var(--pink), 0 0 40px rgba(255,46,151,0.4), 16px 18px 0 rgba(0,0,0,0.5);
   transform:rotate(-1.2deg);
+  border-radius:10px;
+  overflow:hidden;
 }
 .freeze-frame img{display:block;width:100%;height:auto;}
 .freeze-frame::after{
   content:'';
   position:absolute;inset:0;
-  background:repeating-linear-gradient(to bottom, rgba(0,0,0,0.12) 0px, rgba(0,0,0,0.12) 1px, transparent 2px, transparent 4px);
+  background:repeating-linear-gradient(to bottom, rgba(0,0,0,0.16) 0px, rgba(0,0,0,0.16) 1px, transparent 2px, transparent 4px);
   mix-blend-mode:multiply;
   opacity:0.6;
 }
 .finale-caption{
-  font-family:var(--f-marker);
-  font-size:18px;
-  color:var(--mostaza);
+  font-family:var(--f-pixel);
+  font-size:13px;
+  color:var(--yellow);
   margin-top:28px;
-  transform:rotate(-1deg);
   display:inline-block;
 }
 
-/* ---------- outro ---------- */
+/* ---------- outro (game over) ---------- */
 .outro{
   min-height:70svh;
-  background:linear-gradient(180deg, var(--tinta), #14100c);
-  color:var(--cinta);
+  background:linear-gradient(180deg, var(--bg-deep), #05020a);
+  color:var(--ink);
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -510,44 +519,47 @@ section{
 }
 .outro h2{
   font-family:var(--f-display);
-  font-weight:900;
-  font-size:clamp(34px,7vw,80px);
+  font-size:clamp(32px,6.5vw,72px);
   margin:0 0 20px;
   letter-spacing:0.02em;
+  color:var(--pink);
+  text-shadow:0 0 10px var(--pink), 0 0 34px var(--pink);
 }
 .outro p{
   font-family:var(--f-mono);
   font-size:14px;
-  opacity:0.75;
+  opacity:0.8;
   max-width:44ch;
   line-height:1.7;
-  margin-bottom:34px;
+  margin-bottom:8px;
 }
+.outro p:last-of-type{margin-bottom:34px;}
 .rewind-btn{
-  font-family:var(--f-mono);
-  font-size:14px;
-  letter-spacing:0.15em;
-  color:var(--tinta);
-  background:var(--mostaza);
+  font-family:var(--f-pixel);
+  font-size:12px;
+  letter-spacing:0.05em;
+  color:var(--bg-deep);
+  background:var(--yellow);
   border:none;
-  padding:14px 26px;
+  padding:16px 26px;
   cursor:pointer;
   border-radius:2px;
-  box-shadow:0 4px 0 rgba(0,0,0,0.35);
+  box-shadow:0 4px 0 rgba(0,0,0,0.5), 0 0 24px rgba(255,225,77,0.45);
   transition:transform 0.15s ease, box-shadow 0.15s ease;
 }
-.rewind-btn:hover{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,0.35);}
-.rewind-btn:focus-visible{outline:3px solid var(--tracking);outline-offset:3px;}
+.rewind-btn:hover{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,0.5), 0 0 24px rgba(255,225,77,0.45);}
+.rewind-btn:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
 .credits{
   margin-top:56px;
-  font-size:11px;
-  letter-spacing:0.2em;
-  opacity:0.4;
+  font-family:var(--f-pixel);
+  font-size:9px;
+  letter-spacing:0.1em;
+  opacity:0.5;
 }
 
 /* focus visibility */
 a:focus-visible, button:focus-visible{
-  outline:3px solid var(--tracking);
+  outline:3px solid var(--cyan);
   outline-offset:2px;
 }
 
@@ -564,6 +576,31 @@ a:focus-visible, button:focus-visible{
   .chapter-body{font-size:14px;}
   .outro p{font-size:13px;}
 }
+
+/* ---------- confetti (fiesta) ---------- */
+.confetti-layer{
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:700;
+  overflow:hidden;
+}
+.confetti-piece{
+  position:absolute;
+  top:-16px;
+  border-radius:1px;
+  opacity:0.95;
+  animation-name:confettiFall;
+  animation-timing-function:cubic-bezier(.35,.55,.25,1);
+  animation-fill-mode:forwards;
+}
+@keyframes confettiFall{
+  0%{transform:translateY(0) rotate(0deg);}
+  100%{transform:translateY(112vh) rotate(600deg);opacity:0.85;}
+}
+.confetti-btn{margin-top:22px;}
+@media (prefers-reduced-motion:reduce){
+  .confetti-layer{display:none;}
+}
 </style>
 </head>
 <body>
@@ -571,15 +608,15 @@ a:focus-visible, button:focus-visible{
 <div class="grain"></div>
 <div class="scanlines"></div>
 <div class="vignette"></div>
+<div class="confetti-layer" id="confettiLayer"></div>
 
 <div class="rec-hud">
   <div class="rec-dot"></div>
-  <span>REC</span>
-  <span class="rec-time" id="recTime">00:00:00</span>
+  <span>🕹 CRÉDITO 01</span>
 </div>
 
 <div class="tape-counter">
-  <div class="cnt-label">CONTADOR</div>
+  <div class="cnt-label">PUNTOS</div>
   <div class="digits" id="tapeDigits">
     <div class="digit"><div class="digit-strip" data-d="0"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div></div>
     <div class="digit"><div class="digit-strip" data-d="0"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div></div>
@@ -591,44 +628,43 @@ a:focus-visible, button:focus-visible{
 
   <section class="hero">
     <div class="hero-frame"><span></span></div>
-    <div class="hero-eyebrow-top">▶ REPRODUCIENDO CINTA Nº 040</div>
-    <div class="vhs-wrap">
-      <img id="imgVhs" class="vhs-fx" alt="Cinta VHS recortada, sin fondo" width="1400" height="768">
-      <div class="vhs-label">
-        <div class="vhs-label-line1">RAÚL: EDICIÓN ESPECIAL</div>
-        <div class="vhs-label-name">RAÚL</div>
-        <div class="vhs-label-line2">40 años de metraje · Desde 1986</div>
-      </div>
+    <div class="synth-sun"></div>
+    <div class="synth-grid"></div>
+    <img id="imgVhs" alt="" width="1400" height="768" style="display:none" aria-hidden="true">
+    <div class="hero-content">
+      <div class="hero-eyebrow-top">🕹 INSERTA FICHA · PARTIDA Nº 040</div>
+      <h1 class="hero-title">RAÚL</h1>
+      <div class="hero-sub">EDICIÓN ESPECIAL · NIVEL 40</div>
+      <div class="hero-tagline">40 años de partida · Desde 1986</div>
+      <div class="scroll-hint">▼ PULSA START</div>
     </div>
-    <div class="scroll-hint">▼ AVANZAR CINTA</div>
   </section>
 
   <section class="chapter">
     <div class="chapter-media">
       <div class="sticker tilt-a reveal from-left" id="stickerBaby">
-        <div class="sticker-tape"></div>
-        <img id="imgBaby" class="vhs-fx" alt="Raúl de bebé, foto original de 1986" width="480" height="521">
+        <img id="imgBaby" class="crt-fx" alt="Raúl de bebé, foto original de 1986" width="480" height="521">
       </div>
     </div>
     <div class="chapter-text reveal from-right">
-      <div class="chapter-num">CAPÍTULO 01 / 03</div>
-      <div class="eyebrow">rebobinando a 1986</div>
+      <div class="chapter-num">NIVEL 01 / 03</div>
+      <div class="eyebrow">▶ cargando partida · 1986</div>
       <h2 class="chapter-heading glitchy" data-text="EL ESTRENO">EL ESTRENO</h2>
       <p class="chapter-body">Mucho antes de que aparecieran las primeras canas (y de descubrir qué demonios era el lumbago), la vida empezó aquí: un estreno en exclusiva, con una mirada entre la sorpresa y la desconfianza que, si te fijas bien, todavía se le asoma de vez en cuando.</p>
       <p class="chapter-body">Cuarenta años rodando la misma película. Ha cambiado el vestuario, han cambiado los escenarios, pero el protagonista sigue teniendo los mismos ojos pillos.</p>
-      <div class="chapter-note">— Toma 1. Estreno mundial, 1986.</div>
+      <div class="chapter-note">— Ronda 1. Debut mundial, 1986.</div>
     </div>
   </section>
 
   <section class="chapter reverse">
     <div class="chapter-media">
       <div class="sticker tilt-b reveal from-right" id="stickerBw">
-        <img id="imgBw" class="vhs-fx" alt="Raúl de comunión, posando muy serio con traje de marinero" width="620" height="802">
+        <img id="imgBw" class="crt-fx" alt="Raúl de comunión, posando muy serio con traje de marinero" width="620" height="802">
       </div>
     </div>
     <div class="chapter-text reveal from-left">
-      <div class="chapter-num">CAPÍTULO 02 / 03</div>
-      <div class="eyebrow">archivo familiar · estudio fotográfico</div>
+      <div class="chapter-num">NIVEL 02 / 03</div>
+      <div class="eyebrow">▶ archivo desbloqueado · estudio fotográfico</div>
       <h2 class="chapter-heading glitchy" data-text="EL GALÁN SERIO">EL GALÁN SERIO</h2>
       <p class="chapter-body">Traje de marinero de gala, cordón dorado impecable y esa mano en la barbilla de quien ya sabe posar para la posteridad. La consigna era clara: "No me hagáis reír, que esto es un asunto serio". Del flequillo de entonces hoy queda el recuerdo, sustituido por unas canas muy bien ganadas.</p>
       <p class="chapter-body">Aquí ya se intuía el carácter: madera de actor clásico a los ocho años y la misma planta con la que hoy sopla las velas.</p>
@@ -639,12 +675,12 @@ a:focus-visible, button:focus-visible{
   <section class="chapter">
     <div class="chapter-media">
       <div class="sticker tilt-a reveal pop" id="stickerNoa">
-        <img id="imgNoa" class="vhs-fx" alt="Raúl dando un beso a su hija, riendo los dos" width="560" height="531">
+        <img id="imgNoa" class="crt-fx" alt="Raúl dando un beso a su hija, riendo los dos" width="560" height="531">
       </div>
     </div>
     <div class="chapter-text reveal from-right">
-      <div class="chapter-num">CAPÍTULO 03 / 03</div>
-      <div class="eyebrow">escena favorita del archivo</div>
+      <div class="chapter-num">NIVEL 03 / 03</div>
+      <div class="eyebrow">▶ escena favorita del jugador</div>
       <h2 class="chapter-heading glitchy" data-text="LA MEJOR ESCENA">LA MEJOR ESCENA</h2>
       <p class="chapter-body">A los 20 importaba la velocidad. A los 30, el destino. Pero al llegar a los 40 descubres que el verdadero éxito es esto: un plano secuencia en bucle, una risa sincera y el mejor sonido de fondo del mundo: la risa de Noa, sin filtros ni edición.</p>
       <p class="chapter-body">Podríamos revisar miles de horas de cinta, pero esta es, sin ninguna duda, la mejor toma de todo el archivo.</p>
@@ -653,31 +689,32 @@ a:focus-visible, button:focus-visible{
   </section>
 
   <section class="document">
-    <div class="chapter-num">DOCUMENTACIÓN OFICIAL</div>
-    <div class="eyebrow">insertar cinta para verificar</div>
-    <h2 class="chapter-heading reveal">SE EXPIDE LICENCIA OFICIAL</h2>
-    <p class="chapter-body" style="margin:0 auto;color:rgba(237,227,204,0.85);">Tras cuarenta años de rodaje ininterrumpido y excelente servicio, el Club de la Madurez Impecable concede oficialmente este carné de socio. Válido para toda la vida. No requiere renovación, solo disfrutar del viaje.</p>
+    <div class="chapter-num">FICHA DE JUGADOR</div>
+    <div class="eyebrow">▶ escanea la tarjeta para verificar</div>
+    <h2 class="chapter-heading reveal">FICHA DESBLOQUEADA</h2>
+    <p class="chapter-body" style="margin:0 auto;color:rgba(253,243,255,0.85);">Tras cuarenta años de partida ininterrumpida y excelente puntuación, el Club de la Madurez Impecable concede oficialmente esta ficha de jugador. Válida para toda la vida. No requiere renovación, solo disfrutar del juego.</p>
     <div class="document-frame reveal" id="documentFrame">
       <div class="scan-sweep"></div>
-      <img id="imgCarnet" class="vhs-fx" alt="Licencia oficial de cuarentón a nombre de Raúl" width="820" height="1159">
+      <img id="imgCarnet" class="crt-fx" alt="Licencia oficial de cuarentón a nombre de Raúl" width="820" height="1159">
     </div>
-    <div class="document-caption">Nº DE SERIE: JRAM-1986-40 · CATEGORÍA: EDICIÓN ÉPICA</div>
+    <div class="document-caption">PLAYER ID: JRAM-1986-40 · RAREZA: LEYENDARIA</div>
   </section>
 
   <section class="finale">
-    <div class="pause-badge">▐▐ &nbsp;PAUSA · FOTOGRAMA CONGELADO</div>
+    <div class="pause-badge">★ RONDA BONUS · PANTALLA GUARDADA</div>
     <div class="freeze-frame reveal" id="freezeFrame">
-      <img id="imgPoster" class="vhs-fx" alt="Tarjeta de felicitación con globos y velas de 40 años" width="820" height="546">
+      <img id="imgPoster" class="crt-fx" alt="Tarjeta de felicitación con globos y velas de 40 años" width="820" height="546">
     </div>
     <div class="finale-caption">40 velas y ninguna se ha resistido</div>
+    <button class="rewind-btn confetti-btn" id="confettiBtn" type="button">🎉 Soplar más confeti</button>
   </section>
 
   <section class="outro">
-    <h2>FIN DE LA CINTA</h2>
-    <p>Gracias por estos primeros 40 años dando el mejor material posible. Que la próxima cinta venga cargada de las mismas risas, algo menos de dolor de espalda y muchas más tartas que celebrar.</p>
-    <p>Sigue rodando, Raúl.</p>
-    <button class="rewind-btn" id="rewindBtn">◀◀ VOLVER A EMPEZAR</button>
-    <div class="credits">GRABADO CON MUCHO CARIÑO PARA RAÚL · 8 DE JULIO DE 2026</div>
+    <h2>GAME OVER</h2>
+    <p>Gracias por estos primeros 40 años dando el mejor material posible. Que la próxima partida venga cargada de las mismas risas, algo menos de dolor de espalda y muchas más tartas que celebrar.</p>
+    <p>Sigue jugando, Raúl.</p>
+    <button class="rewind-btn" id="rewindBtn">🕹 PULSA START PARA CONTINUAR</button>
+    <div class="credits">HECHO CON MUCHO CARIÑO PARA RAÚL · 8 DE JULIO DE 2026</div>
   </section>
 
 </main>
@@ -729,16 +766,8 @@ if(!prefersReduced){
   });
 }
 
-/* === scroll-driven HUD: timecode + tape counter === */
-const recTime = document.getElementById('recTime');
+/* === scroll-driven HUD: score counter === */
 const digitStrips = document.querySelectorAll('.digit-strip');
-
-function formatTime(totalSeconds){
-  const h = Math.floor(totalSeconds/3600).toString().padStart(2,'0');
-  const m = Math.floor((totalSeconds%3600)/60).toString().padStart(2,'0');
-  const s = Math.floor(totalSeconds%60).toString().padStart(2,'0');
-  return h+':'+m+':'+s;
-}
 
 function updateHUD(){
   const doc = document.documentElement;
@@ -746,11 +775,7 @@ function updateHUD(){
   const scrollHeight = (doc.scrollHeight - doc.clientHeight) || 1;
   const progress = Math.min(1, Math.max(0, scrollTop/scrollHeight));
 
-  /* fake timecode: 0 to ~2h40m across the whole page */
-  const totalSeconds = Math.floor(progress * 9600);
-  recTime.textContent = formatTime(totalSeconds);
-
-  /* tape counter 000-999 */
+  /* score counter 000-999 */
   const counterVal = Math.floor(progress*999).toString().padStart(3,'0');
   digitStrips.forEach((strip,i)=>{
     const digit = parseInt(counterVal[i],10);
@@ -789,6 +814,42 @@ if(!prefersReduced && window.matchMedia('(pointer: fine)').matches){
 document.getElementById('rewindBtn').addEventListener('click', ()=>{
   window.scrollTo({top:0, behavior: prefersReduced ? 'auto' : 'smooth'});
 });
+
+/* === confetti (fiesta) === */
+const confettiColors = ['#ff2e97','#2be7ff','#b06bff','#ffe14d','#ff7a45'];
+const confettiLayer = document.getElementById('confettiLayer');
+function launchConfetti(count){
+  if(prefersReduced || !confettiLayer) return;
+  for(let i=0;i<count;i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const size = 6 + Math.random()*6;
+    piece.style.width = size+'px';
+    piece.style.height = (size*1.7)+'px';
+    piece.style.left = (Math.random()*100)+'vw';
+    piece.style.background = confettiColors[Math.floor(Math.random()*confettiColors.length)];
+    piece.style.animationDuration = (2.4 + Math.random()*1.6)+'s';
+    piece.style.animationDelay = (Math.random()*0.5)+'s';
+    confettiLayer.appendChild(piece);
+    setTimeout(()=>piece.remove(), 4600);
+  }
+}
+const finaleSection = document.querySelector('.finale');
+if(finaleSection && 'IntersectionObserver' in window){
+  const finaleIO = new IntersectionObserver((entries, obs)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        launchConfetti(70);
+        obs.disconnect();
+      }
+    });
+  }, {threshold:0.5});
+  finaleIO.observe(finaleSection);
+}
+const confettiBtn = document.getElementById('confettiBtn');
+if(confettiBtn){
+  confettiBtn.addEventListener('click', ()=>launchConfetti(50));
+}
 </script>
 
 </body>
